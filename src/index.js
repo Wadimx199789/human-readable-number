@@ -1,31 +1,57 @@
-
-var mas1=['zero','one','two','three','four','five','six','seven','eight','nine','ten'];
-var mas2=['eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
-var mas3=['twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
 module.exports = function toReadable (number) {
-  if(number>=0 && number<=10){
-    for(let i=0;i<mas1.length;i++){
-      if(number==i) return mas1[i];
-    }
-
-}
- if(number>10 && number<=20){
-
- return mas2[number-11];
-}
-else if(number>20 && number<100){
-  
-  if(number%10==0)return mas3[number/10-2];
-  else return String(mas3[Math.ceil(number/10)-3]+" "+mas1[number%10]);
-}
-else if(number>=100 && number<1000){
-  if(number%100==0)return String(mas1[Math.ceil(number/100)]+" "+"hundred");
-  else if(number%100>=1 && number%100<=10)return String (mas1[Math.ceil(number/100)-1]+" "+"hundred"+" "+mas1[number%100]);
-  else if(number%100>10 && number%100<=20){
-    return String(mas1[Math.ceil(number/100)-1]+" "+"hundred"+" "+mas2[(number%100)-11]);
+  let nums = {
+      '0':'zero',
+      '1': 'one',
+      '2': 'two',
+      '3': 'three',
+      '4': 'four',
+      '5': 'five',
+      '6': 'six',
+      '7': 'seven',
+      '8': 'eight',
+      '9': 'nine',
+      '10': 'ten',
+      '11': 'eleven',
+      '12': 'twelve',
+      '13': 'thirteen',
+      '14': 'fourteen',
+      '15': 'fifteen',
+      '16': 'sixteen',
+      '17': 'seventeen',
+      '18': 'eighteen',
+      '19': 'nineteen',
+      '20': 'twenty',
+      '30': 'thirty',
+      '40': 'forty',
+      '50': 'fifty',
+      '60': 'sixty',
+      '70': 'seventy',
+      '80': 'eighty',
+      '90': 'ninety',
+      '100': 'hundred',
   }
-  else if (number%100>20 && number%10==0){return String(mas1[Math.ceil(number/100)-1]+" "+"hundred"+" "+mas3[Math.ceil(((number%100)/10)-2)])}
-  else if(number%100>20){return String(mas1[Math.ceil(number/100)-1]+" "+"hundred"+" "+mas3[Math.ceil(((number%100)/10)-3)]+" "+mas1[(number%100)%10]); }
+  number = number.toString().split('');
+  if(number.length === 1) return nums[number]  
+  else if(number.length === 2){
+if(number[0] === '1'){ 
+  return nums[number[0] + number[1]] 
+} else if(number[1] === '0'){
+  return nums[number[0] + '0']
+} else 
+return nums[number[0] + '0'] + ' ' + nums[number[1]]
+} else if(number.length === 3){
+let base = nums[number[0]] + ' ' + nums['100'];
+if(number[1] === '0' && number[2] !== '0'){
+  return base + ' ' + nums[number[2]]
+} else if(number[1] === '1'){
+return base + ' ' + nums[number[1] + number[2]]
+} else if (number[1] !== '1' && number[1] !== '0' && number[2] === '0'){
+  return base + ' ' + nums[number[1] + '0']
+} else if (number[1] !== '1' && number[1] !== '0' && number[2] !== '0'){
+  return base + ' ' + nums[number[1] + '0'] + ' ' + (nums[number[2]])
+} else {
+  return base 
 }
- 
+}
+
 }
